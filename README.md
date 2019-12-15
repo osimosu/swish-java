@@ -1,6 +1,6 @@
 # jswish
 
-Java library for the Stripe API.
+Java Spring library for the Stripe API.
 
 ## Requirements
 
@@ -40,45 +40,66 @@ swish:
   cert-password: swish
 ```
 
-MyAppSwishConfig.java
+DemoAppConfig.java
 ```java
+package com.example.demo.config;
+
 import com.osimosu.jswish.config.SwishConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(SwishConfig.class)
-public class MyAppSwishConfig {
+public class DemoAppConfig {
 }
+
 ```
 
 
-SwishExample.java
+DemoApplication.java
 
 ```java
+package com.example.demo;
+
 import com.osimosu.jswish.domain.PaymentRequest;
 import com.osimosu.jswish.exceptions.SwishException;
 import com.osimosu.jswish.service.SwishService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
-public class SwishExample {
+@SpringBootApplication
+public class DemoApplication {
 
-    public static void main(String[] args) {
-		
-		PaymentRequest paymentRequest = new PaymentRequest()
-				.amount("100")
-				.currency("SEK")
-				.payeeAlias("1231181189")
-				.payerAlias("46733854950")
-				.payeePaymentReference("1")
-				.message("iPhone 6s")
-				.callbackUrl("https://myfakehost.se/swishcallback.cfm");
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
 
-		try {
-			String location = swishService.createPayment(paymentRequest);
-		} catch (SwishException e) {
-			e.printStackTrace();
-		}
-    }
+	@Bean
+	public CommandLineRunner commandLineRunner(SwishService swishService) {
+		return args -> {
+			PaymentRequest paymentRequest = new PaymentRequest()
+					.amount("100")
+					.currency("SEK")
+					.payeeAlias("1231181189")
+					.payerAlias("46733854950")
+					.payeePaymentReference("1")
+					.message("iPhone 6s")
+					.callbackUrl("https://myfakehost.se/swishcallback.cfm");
+
+			try {
+				// provided callbackUrl is called by MSS with result of payment request
+				// It is also possible to retrieve the payment using the location url
+				String location = swishService.createPayment(paymentRequest);
+
+				System.out.println(location);
+			} catch (SwishException e) {
+				e.printStackTrace();
+			}
+		};
+	}
+
 }
 ```
 
