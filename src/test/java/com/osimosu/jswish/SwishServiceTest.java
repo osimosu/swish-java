@@ -2,6 +2,7 @@ package com.osimosu.jswish;
 
 import com.osimosu.jswish.config.SwishProperties;
 import com.osimosu.jswish.domain.PaymentRequest;
+import com.osimosu.jswish.exceptions.SwishException;
 import com.osimosu.jswish.service.SwishService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,9 +33,13 @@ public class SwishServiceTest {
 		paymentRequest.setPayeePaymentReference("1");
 		paymentRequest.setMessage("iPhone 6S");
 
-		String location = swishService.createPayment(paymentRequest);
+		try {
+			String location = swishService.createPayment(paymentRequest);
+			Assertions.assertThat(location).isNotNull();
+		} catch (SwishException e) {
+			e.printStackTrace();
+		}
 
-		Assertions.assertThat(location).isNotNull();
 	}
 
 	@SpringBootApplication

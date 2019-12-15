@@ -32,7 +32,7 @@ public class SwishServiceImpl implements SwishService {
     }
 
     @Override
-    public String createPayment(PaymentRequest paymentRequest) {
+    public String createPayment(PaymentRequest paymentRequest) throws SwishException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
