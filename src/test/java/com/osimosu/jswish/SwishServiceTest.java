@@ -24,14 +24,15 @@ public class SwishServiceTest {
 	@Test
 	public void contextLoads() throws IOException {
 
-		PaymentRequest paymentRequest = new PaymentRequest();
-		paymentRequest.setAmount("100");
-		paymentRequest.setCallbackUrl("https://myfakehost.se/swishcallback.cfm");
-		paymentRequest.setCurrency("SEK");
-		paymentRequest.setPayeeAlias("1231181189");
-		paymentRequest.setPayerAlias("46733854950");
-		paymentRequest.setPayeePaymentReference("1");
-		paymentRequest.setMessage("iPhone 6S");
+
+		PaymentRequest paymentRequest = new PaymentRequest()
+				.amount("100")
+				.currency("SEK")
+				.payeeAlias("1231181189")
+				.payerAlias("46733854950")
+				.payeePaymentReference("1")
+				.message("iPhone 6s")
+				.callbackUrl("https://myfakehost.se/swishcallback.cfm");
 
 		try {
 			String location = swishService.createPayment(paymentRequest);
