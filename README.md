@@ -89,8 +89,8 @@ public class DemoApplication {
 					.callbackUrl("https://myfakehost.se/swishcallback.cfm");
 
 			try {
-				// provided callbackUrl is called by MSS with result of payment request
-				// It is also possible to retrieve the payment using the location url
+				// While provided callbackUrl is called by MSS with result of payment request,
+				// it is also possible to retrieve the payment using the location url
 				String location = swishService.createPayment(paymentRequest);
 
 				System.out.println(location);
