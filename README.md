@@ -90,14 +90,13 @@ public class DemoApplication {
 
 			try {
 				// While provided callbackUrl is called by MSS with result of payment request,
-				// it is also possible to retrieve the payment using the location url
-				String locationUrl = swishService.createPayment(paymentRequest);
+				// it is also possible to retrieve the payment using the token returned
+				String PaymentRequestToken = swishService.createPayment(paymentRequest);
 			} catch (SwishException e) {
 				e.printStackTrace();
 			}
 		};
 	}
-
 }
 ```
 

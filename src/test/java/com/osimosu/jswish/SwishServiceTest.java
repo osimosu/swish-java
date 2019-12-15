@@ -22,7 +22,7 @@ public class SwishServiceTest {
 	private SwishProperties swishProperties;
 
 	@Test
-	public void contextLoads() throws IOException {
+	public void createPayment() throws IOException {
 
 
 		PaymentRequest paymentRequest = new PaymentRequest()
@@ -35,12 +35,11 @@ public class SwishServiceTest {
 				.callbackUrl("https://myfakehost.se/swishcallback.cfm");
 
 		try {
-			String location = swishService.createPayment(paymentRequest);
-			Assertions.assertThat(location).isNotNull();
+			String paymentRequestToken = swishService.createPayment(paymentRequest);
+			Assertions.assertThat(paymentRequestToken).isNotNull();
 		} catch (SwishException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@SpringBootApplication

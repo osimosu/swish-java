@@ -8,7 +8,7 @@ import com.osimosu.jswish.exceptions.SwishException;
 public interface SwishService {
     String createPayment(PaymentRequest paymentRequest) throws SwishException;
 
-    Payment getPayment(String paymentRequestToken);
+    Payment getPayment(String paymentRequestToken) throws SwishException;
 
     String createRefund(RefundRequest refundRequest);
 }

@@ -42,7 +42,7 @@ public class SwishServiceImpl implements SwishService {
             ResponseEntity<String> responseEntity = restTemplate
                     .postForEntity(swishProperties.getPaymentRequestsEndpoint(), entity, String.class);
 
-            return responseEntity.getHeaders().getFirst(HttpHeaders.LOCATION);
+            return responseEntity.getHeaders().getFirst("PaymentRequestToken");
 
         } catch (HttpClientErrorException e) {
            throw new SwishException(e.getMessage());
@@ -50,8 +50,15 @@ public class SwishServiceImpl implements SwishService {
     }
 
     @Override
-    public Payment getPayment(String paymentRequestToken) {
-        return null;
+    public Payment getPayment(String paymentRequestToken) throws SwishException {
+
+        try {
+            return restTemplate
+                    .getForObject(swishProperties.getPaymentRequestsEndpoint() + paymentRequestToken, Payment.class);
+
+        } catch (Exception e) {
+            throw new SwishException(e.getMessage());
+        }
     }
 
     @Override
