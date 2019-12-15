@@ -42,7 +42,10 @@ public class SwishServiceImpl implements SwishService {
             ResponseEntity<String> responseEntity = restTemplate
                     .postForEntity(swishProperties.getPaymentRequestsEndpoint(), entity, String.class);
 
-            return responseEntity.getHeaders().getFirst("PaymentRequestToken");
+            String location = responseEntity.getHeaders().getFirst(HttpHeaders.LOCATION);
+            String[] split = location.split("/");
+
+            return split[split.length - 1];
 
         } catch (HttpClientErrorException e) {
            throw new SwishException(e.getMessage());
