@@ -12,7 +12,7 @@
 	<artifactId>jswish</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jswish</name>
-	<description>Java Spring library for the Stripe API.</description>
+	<description>Java Spring library for the Swish API.</description>
 
 	<properties>
 		<java.version>1.8</java.version>

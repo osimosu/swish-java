@@ -1,6 +1,6 @@
 # jswish
 
-Java Spring library for the Stripe API.
+Java Spring library for the Swish API.
 
 ## Requirements
 
