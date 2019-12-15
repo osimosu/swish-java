@@ -19,8 +19,8 @@ import java.security.cert.X509Certificate;
 @EnableConfigurationProperties(SwishProperties.class)
 public class SwishClient {
 
-    public static final String KEYSTORE_TYPE = "PKCS12";
-    public static final String SSL_PROTOCOL = "TLS";
+    private static final String KEYSTORE_TYPE = "PKCS12";
+    private static final String SSL_PROTOCOL = "TLS";
 
     private final SwishProperties swishProperties;
 

@@ -28,6 +28,8 @@ public class SwishServiceTest {
 		paymentRequest.setCallbackUrl("https://myfakehost.se/swishcallback.cfm");
 		paymentRequest.setCurrency("SEK");
 		paymentRequest.setPayeeAlias("1231181189");
+		paymentRequest.setPayerAlias("46733854950");
+		paymentRequest.setPayeePaymentReference("1");
 		paymentRequest.setMessage("iPhone 6S");
 
 		String location = swishService.createPayment(paymentRequest);
