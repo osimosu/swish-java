@@ -7,7 +7,8 @@ import org.springframework.core.io.Resource;
 public class SwishProperties {
     private Resource certFile;
     private String certPassword;
-    private String paymentRequestsEndpoint;
+    private String paymentsEndpoint;
+    private String refundsEndpoint;
 
     public Resource getCertFile() {
         return certFile;
@@ -25,11 +26,29 @@ public class SwishProperties {
         this.certPassword = certPassword;
     }
 
-    public String getPaymentRequestsEndpoint() {
-        return paymentRequestsEndpoint;
+    public String getPaymentsEndpoint() {
+        return paymentsEndpoint;
     }
 
-    public void setPaymentRequestsEndpoint(String paymentRequestsEndpoint) {
-        this.paymentRequestsEndpoint = paymentRequestsEndpoint;
+    public void setPaymentsEndpoint(String paymentsEndpoint) {
+        this.paymentsEndpoint = paymentsEndpoint;
+    }
+
+    public String getRefundsEndpoint() {
+        return refundsEndpoint;
+    }
+
+    public void setRefundsEndpoint(String refundsEndpoint) {
+        this.refundsEndpoint = refundsEndpoint;
+    }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "SwishProperties{" +
+                "certFile=" + certFile +
+                ", certPassword='" + certPassword + '\'' +
+                ", paymentsEndpoint='" + paymentsEndpoint + '\'' +
+                ", refundsEndpoint='" + refundsEndpoint + '\'' +
+                '}';
     }
 }

@@ -35,7 +35,8 @@ application.yml
 
 ```yaml
 swish:
-  payment-requests-endpoint: https://mss.cpc.getswish.net/swish-cpcapi/api/v1/paymentrequests
+  payments-endpoint: https://mss.cpc.getswish.net/swish-cpcapi/api/v1/paymentrequests/
+  refunds-endpoint: https://mss.cpc.getswish.net/swish-cpcapi/api/v1/refunds/
   cert-file: classpath:swish/Swish_Merchant_TestCertificate_1231181189.p12
   cert-password: swish
 ```
@@ -90,7 +91,7 @@ public class DemoApplication {
 
 			try {
 				// While provided callbackUrl is called by MSS with result of payment request,
-				// it is also possible to retrieve the payment using the token returned
+				// it is also possible to retrieve the payment object with swishService.getPayment(PaymentRequestToken)
 				String PaymentRequestToken = swishService.createPayment(paymentRequest);
 			} catch (SwishException e) {
 				e.printStackTrace();
