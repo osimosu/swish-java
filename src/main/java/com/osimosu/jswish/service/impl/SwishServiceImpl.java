@@ -46,15 +46,11 @@ public class SwishServiceImpl implements SwishService {
                     .postForEntity(swishProperties.getPaymentsEndpoint(), entity, String.class);
 
             String location = responseEntity.getHeaders().getFirst(HttpHeaders.LOCATION);
-            String[] split;
-            if (location != null) {
-                split = location.split(File.separator);
-                return split[split.length - 1];
-            }
+            String[] split = location.split(File.separator);
+            return split[split.length - 1];
         } catch (HttpClientErrorException e) {
             throw new SwishException(e.getMessage());
         }
-        return null;
     }
 
     @Override
@@ -81,15 +77,11 @@ public class SwishServiceImpl implements SwishService {
                     .postForEntity(swishProperties.getRefundsEndpoint(), entity, String.class);
 
             String location = responseEntity.getHeaders().getFirst(HttpHeaders.LOCATION);
-            String[] split;
-            if (location != null) {
-                split = location.split(File.separator);
-                return split[split.length - 1];
-            }
+            String[] split = location.split(File.separator);
+            return split[split.length - 1];
         } catch (HttpClientErrorException e) {
             throw new SwishException(e.getMessage());
         }
-        return null;
     }
 
     @Override

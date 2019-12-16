@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-
 @SpringBootTest()
 public class SwishServiceTest {
 
@@ -18,7 +16,7 @@ public class SwishServiceTest {
     private SwishService swishService;
 
     @Test
-    public void createPayment() throws IOException {
+    public void createPayment() throws SwishException {
 
         PaymentRequest paymentRequest = new PaymentRequest()
                 .amount("100")
@@ -28,13 +26,10 @@ public class SwishServiceTest {
                 .payeePaymentReference("1")
                 .message("iPhone 6s")
                 .callbackUrl("https://myfakehost.se/swishcallback.cfm");
-        try {
-            String paymentRequestToken = swishService.createPayment(paymentRequest);
-            Assertions.assertThat(paymentRequestToken).isNotNull();
 
-        } catch (SwishException e) {
-            e.printStackTrace();
-        }
+        String paymentRequestToken = swishService.createPayment(paymentRequest);
+        Assertions.assertThat(paymentRequestToken).isNotNull();
+
     }
 
     @SpringBootApplication
