@@ -41,14 +41,4 @@ public class SwishProperties {
     public void setRefundsEndpoint(String refundsEndpoint) {
         this.refundsEndpoint = refundsEndpoint;
     }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "SwishProperties{" +
-                "certFile=" + certFile +
-                ", certPassword='" + certPassword + '\'' +
-                ", paymentsEndpoint='" + paymentsEndpoint + '\'' +
-                ", refundsEndpoint='" + refundsEndpoint + '\'' +
-                '}';
-    }
 }

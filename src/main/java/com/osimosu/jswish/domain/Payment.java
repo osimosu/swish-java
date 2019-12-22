@@ -15,8 +15,8 @@ public class Payment {
     private String status;
     private String dateCreated;
     private String datePaid;
-    private String errorCode = null;
-    private String errorMessage = null;
+    private String errorCode;
+    private String errorMessage;
 
     public String getId() {
         return id;
