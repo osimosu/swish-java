@@ -62,42 +62,59 @@ DemoApplication.java
 ```java
 package com.example.demo;
 
+import com.osimosu.jswish.domain.Payment;
 import com.osimosu.jswish.domain.PaymentRequest;
-import com.osimosu.jswish.exceptions.SwishException;
+import com.osimosu.jswish.exception.SwishException;
+import com.osimosu.jswish.exception.payment.PaymentRequestException;
+import com.osimosu.jswish.exception.payment.PaymentResultException;
 import com.osimosu.jswish.service.SwishService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.concurrent.TimeUnit;
+
 @SpringBootApplication
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner(SwishService swishService) {
-		return args -> {
-			PaymentRequest paymentRequest = new PaymentRequest()
-					.amount("100")
-					.currency("SEK")
-					.payeeAlias("1231181189")
-					.payerAlias("46733854950")
-					.payeePaymentReference("1")
-					.message("iPhone 6s")
-					.callbackUrl("https://myfakehost.se/swishcallback.cfm");
+    @Bean
+    public CommandLineRunner commandLineRunner(SwishService swishService) {
+        return args -> {
 
-			try {
-				// While provided callbackUrl is called by MSS with result of payment request,
-				// it is also possible to retrieve the payment object with swishService.getPayment(PaymentRequestToken)
-				String PaymentRequestToken = swishService.createPayment(paymentRequest);
-			} catch (SwishException e) {
-				e.printStackTrace();
-			}
-		};
-	}
+            PaymentRequest paymentRequest = new PaymentRequest()
+                    .amount("100")
+                    .currency("SEK")
+                    .payeeAlias("1231181189")
+                    .payerAlias("46733854950")
+                    .payeePaymentReference("1")
+                    .message("iPhone 6s")
+                    .callbackUrl("https://myfakehost.se/swishcallback.cfm"); // callbackUrl is called by MSS with payment result
+
+            try {
+                // Create a payment
+                String paymentRequestToken = swishService.createPayment(paymentRequest);
+
+                // Wait for approval by swish user
+                TimeUnit.SECONDS.sleep(5);
+
+                // Retrieve payment result with token manually
+                Payment payment = swishService.getPayment(paymentRequestToken);
+                System.out.println(payment);
+
+            } catch (PaymentRequestException e) {
+                // Retrieve status code and list of errors
+            } catch (PaymentResultException e) {
+                // Retrieve status code
+            } catch (SwishException e) {
+                // Random error
+            }
+        };
+    }
 }
 ```
 

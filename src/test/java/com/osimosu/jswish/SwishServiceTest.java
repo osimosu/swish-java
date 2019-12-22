@@ -1,7 +1,7 @@
 package com.osimosu.jswish;
 
 import com.osimosu.jswish.domain.PaymentRequest;
-import com.osimosu.jswish.exceptions.SwishException;
+import com.osimosu.jswish.exception.SwishException;
 import com.osimosu.jswish.service.SwishService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class SwishServiceTest {
     private SwishService swishService;
 
     @Test
-    public void createPayment() throws SwishException {
+    public void createPayment() {
 
         PaymentRequest paymentRequest = new PaymentRequest()
                 .amount("100")
@@ -24,12 +24,16 @@ public class SwishServiceTest {
                 .payeeAlias("1231181189")
                 .payerAlias("46733854950")
                 .payeePaymentReference("1")
-                .message("iPhone 6s")
+                .message("iPhone 6S")
                 .callbackUrl("https://myfakehost.se/swishcallback.cfm");
 
-        String paymentRequestToken = swishService.createPayment(paymentRequest);
+        String paymentRequestToken = null;
+        try {
+            paymentRequestToken = swishService.createPayment(paymentRequest);
+        } catch (SwishException e) {
+            e.printStackTrace();
+        }
         Assertions.assertThat(paymentRequestToken).isNotNull();
-
     }
 
     @SpringBootApplication
