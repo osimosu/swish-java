@@ -12,7 +12,7 @@ Java 1.8 or later.
 
 Maven artifacts for this project are published to GitHub Package Registry for convenience.
 
-Unfortunately, there is [no support for anonymous access to packages yet](https://github.community/t5/GitHub-API-Development-and/GitHub-Package-Registry-does-not-support-multi-CPU-architecture/td-p/32836) regardless of if the package is private or public, so you need to authenticate to GitHub in order to pull down dependencies. 
+Unfortunately, there is [no support for anonymous access to packages yet](https://github.community/t5/GitHub-Actions/docker-pull-from-public-GitHub-Package-Registry-fail-with-quot/td-p/32782) regardless of if the package is private or public, so you need to authenticate to GitHub in order to pull down dependencies. 
 
 Add your username and [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token) in Maven global settings `(~/.m2/settings.xml)`:
 
@@ -73,7 +73,7 @@ swish:
   cert-password: swish
 ```
 
-Import configuration class to enable component scanning for Dependency Injection of provided components especially `SwishService`:
+Import configuration class to enable component scanning (for Dependency Injection) of provided components especially `SwishService`:
 
 DemoAppConfig.java
 ```java
@@ -144,7 +144,7 @@ public class DemoApplication {
             } catch (PaymentResultException e) {
                 // Retrieve status code
             } catch (SwishException e) {
-                // Random error
+                // Other errors
             }
         };
     }
