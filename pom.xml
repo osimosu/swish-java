@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.osimosu</groupId>
 	<artifactId>jswish</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>jswish</name>
 	<description>Java Spring library for the Swish API.</description>
 
@@ -45,4 +45,12 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub eosimosu Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/eosimosu/jswish</url>
+		</repository>
+	</distributionManagement>
 </project>

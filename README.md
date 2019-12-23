@@ -10,6 +10,28 @@ Java 1.8 or later.
 
 ### Maven users
 
+Maven artifacts for this project are published to GitHub Package Registry for convenience.
+
+Unfortunately, there is [no support for anonymous access to packages yet](https://github.community/t5/GitHub-API-Development-and/GitHub-Package-Registry-does-not-support-multi-CPU-architecture/td-p/32836) regardless of if the package is private or public, so you need to authenticate to GitHub in order to pull down dependencies. 
+
+Add your username and [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token) in Maven global settings `(~/.m2/settings.xml)`:
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>GITHUB_USERNAME</username>
+      <password>GITHUB_PERSONAL_ACCESS_TOKEN</password>
+    </server>
+  </servers>
+</settings>
+```
+
 Add this dependency to your project's POM:
 
 ```xml
@@ -20,16 +42,26 @@ Add this dependency to your project's POM:
 </dependency>
 ```
 
-### Gradle users
+Specify the repository for the dependency:
 
-Add this dependency to your project's build file:
-
-```groovy
-implementation "com.osimosu:jswish:0.0.1"
+```xml
+<repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/eosimosu/jswish/</url>
+    </repository>
+</repositories>
 ```
+
+### Others
+
+You can [download the jar](https://github.com/eosimosu/jswish/packages/92349) and install it manually.
 
 ## Usage
 
+You need to [obtain a client certificate](https://www.swish.nu/developer#swish-for-merchants) for authentication of TLS communication with the Swish Commerce API, or you can use the certificate provided for testing.
+
+Specify the certificate details in application properties:
 
 application.yml
 
@@ -40,6 +72,8 @@ swish:
   cert-file: classpath:swish/Swish_Merchant_TestCertificate_1231181189.p12
   cert-password: swish
 ```
+
+Import configuration class to enable component scanning for Dependency Injection of provided components especially `SwishService`:
 
 DemoAppConfig.java
 ```java
@@ -55,7 +89,6 @@ public class DemoAppConfig {
 }
 
 ```
-
 
 DemoApplication.java
 
@@ -102,7 +135,7 @@ public class DemoApplication {
                 // Wait for approval by swish user
                 TimeUnit.SECONDS.sleep(5);
 
-                // Retrieve payment result with token manually
+                // Optionally, manually retrieve payment result using token
                 Payment payment = swishService.getPayment(paymentRequestToken);
                 System.out.println(payment);
 
