@@ -12,28 +12,11 @@ Java 1.8 or later.
 
 Maven artifacts for this project are published to GitHub Package Registry for convenience.
 
-Unfortunately, there is [no support for anonymous access to packages yet](https://github.community/t5/GitHub-Actions/docker-pull-from-public-GitHub-Package-Registry-fail-with-quot/td-p/32782) regardless of if the package is private or public, so you need to authenticate to GitHub in order to pull down dependencies. 
+Unfortunately, there is [no support for anonymous access to packages yet](https://github.community/t5/GitHub-Actions/docker-pull-from-public-GitHub-Package-Registry-fail-with-quot/td-p/32782) regardless of if the package is private or public, so you need to authenticate to GitHub Packages before you can download dependencies. 
 
-Add your username and [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token) in Maven global settings `(~/.m2/settings.xml)`:
+* [Authenticate to GitHub Packages](https://help.github.com/en/github/managing-packages-with-github-packages/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
 
-```xml
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-  <servers>
-    <server>
-      <id>github</id>
-      <username>GITHUB_USERNAME</username>
-      <password>GITHUB_PERSONAL_ACCESS_TOKEN</password>
-    </server>
-  </servers>
-</settings>
-```
-
-Add this dependency to your project's POM:
-
+* Add this dependency to your project's POM:
 ```xml
 <dependency>
   <groupId>com.osimosu</groupId>
@@ -42,20 +25,9 @@ Add this dependency to your project's POM:
 </dependency>
 ```
 
-Specify the repository for the dependency:
-
-```xml
-<repositories>
-    <repository>
-        <id>github</id>
-        <url>https://maven.pkg.github.com/eosimosu/jswish/</url>
-    </repository>
-</repositories>
-```
-
 ### Others
 
-You can [download the jar](https://github.com/eosimosu/jswish/packages/92349) and install it manually.
+[Download the jar](https://github.com/eosimosu/jswish/packages/92349) and install it manually.
 
 ## Usage
 
@@ -73,7 +45,7 @@ swish:
   cert-password: swish
 ```
 
-Import configuration class to enable component scanning (for Dependency Injection) of provided components especially `SwishService`:
+Import configuration class to enable component scanning of library components:
 
 DemoAppConfig.java
 ```java
@@ -125,7 +97,7 @@ public class DemoApplication {
                     .payeeAlias("1231181189")
                     .payerAlias("46733854950")
                     .payeePaymentReference("1")
-                    .message("iPhone 6s")
+                    .message("iPhone 6s Purchase")
                     .callbackUrl("https://myfakehost.se/swishcallback.cfm"); // callbackUrl is called by MSS with payment result
 
             try {
@@ -140,9 +112,9 @@ public class DemoApplication {
                 System.out.println(payment);
 
             } catch (PaymentRequestException e) {
-                // Retrieve status code and list of errors
+                // Provides status code, list of errors etc
             } catch (PaymentResultException e) {
-                // Retrieve status code
+                // Provides status code
             } catch (SwishException e) {
                 // Other errors
             }
