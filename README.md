@@ -1,6 +1,6 @@
-# jswish
+# swish-java
 
-Java Spring library for the [Swish](https://www.getswish.se/) API.
+Java Spring library for the Swish API.
 
 ## Requirements
 
